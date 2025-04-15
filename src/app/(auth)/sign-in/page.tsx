@@ -1,5 +1,5 @@
-import AuthForm from '@/components/custom/AuthForm';
-import React from 'react';
+import AuthForm from "@/src/components/custom/AuthForm";
+import React from "react";
 
 type Props = {};
 

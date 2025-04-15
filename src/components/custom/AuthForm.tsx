@@ -1,18 +1,18 @@
-'use client';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
-import Image from 'next/image';
-import Link from 'next/link';
-import { toast } from 'sonner';
-import FormFieldCustom from './FormField';
-import { useRouter } from 'next/navigation';
+"use client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/src/components/ui/button";
+import { Form } from "@/src/components/ui/form";
+import Image from "next/image";
+import Link from "next/link";
+import { toast } from "sonner";
+import FormFieldCustom from "./FormField";
+import { useRouter } from "next/navigation";
 
 const authFormSchema = (type: FormType) => {
   return z.object({
-    name: type === 'sign-up' ? z.string().min(3) : z.string().optional(),
+    name: type === "sign-up" ? z.string().min(3) : z.string().optional(),
     email: z.string().email(),
     password: z.string().min(6),
   });
@@ -20,29 +20,29 @@ const authFormSchema = (type: FormType) => {
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const formSchema = authFormSchema(type);
-  const isSignIn = type === 'sign-in';
+  const isSignIn = type === "sign-in";
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      if (type === 'sign-in') {
-        toast.success('Sign in successfully!');
-        router.push('/');
+      if (type === "sign-in") {
+        toast.success("Sign in successfully!");
+        router.push("/");
       } else {
-        toast.success('Account created successfully!');
-        router.push('/sign-in');
+        toast.success("Account created successfully!");
+        router.push("/sign-in");
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong!');
+      toast.error("Something went wrong!");
     }
   }
 
@@ -82,16 +82,16 @@ const AuthForm = ({ type }: { type: FormType }) => {
               placeholder="Enter your password"
             />
             <Button className="btn" type="submit">
-              {isSignIn ? 'Sign In' : 'Create Account'}
+              {isSignIn ? "Sign In" : "Create Account"}
             </Button>
           </form>
           <p className="text-center">
-            {isSignIn ? 'No account yet?' : 'Already have an account?'}
+            {isSignIn ? "No account yet?" : "Already have an account?"}
             <Link
-              href={isSignIn ? '/sign-up' : '/sign-in'}
+              href={isSignIn ? "/sign-up" : "/sign-in"}
               className="font-bold text-user-primary ml-1"
             >
-              {isSignIn ? 'Sign up' : 'Sign in'}
+              {isSignIn ? "Sign up" : "Sign in"}
             </Link>
           </p>
         </Form>
