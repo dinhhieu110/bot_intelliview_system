@@ -1,7 +1,6 @@
 import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { initialize } from "next/dist/server/lib/render-server";
+import { getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 const initFireBaseAdmin = () => {
   const apps = getApps();
   if (!apps.length) {
@@ -15,6 +14,7 @@ const initFireBaseAdmin = () => {
   }
 
   return {
+    // Get firebase auth and database store
     auth: getAuth(),
     db: getFirestore(),
   };
