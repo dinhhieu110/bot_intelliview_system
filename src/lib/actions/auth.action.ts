@@ -1,10 +1,10 @@
-import { auth, db } from "@/src/firebase/admin";
-import { cookies } from "next/headers";
+"use server";
+import { auth, db } from "@/firebase/admin";
 
 const ONE_WEEK = 60 * 60 * 24 * 7; // 1 week || 60s, 60m, 24h, 7d
 
 export const signUp = async (params: SignUpParams) => {
-  const { uid, name, email, password } = params;
+  const { uid, name, email } = params;
 
   try {
     // Check exist by coming to Users collection / table, getting document where the specific id
@@ -20,8 +20,12 @@ export const signUp = async (params: SignUpParams) => {
       name,
       email,
     });
+    return {
+      success: true,
+      message: "Account created successfully.",
+    };
   } catch (error: any) {
-    console.error("User was not created because of: ", error);
+    console.error("Invalid Credentials");
     if (error.code === "auth/email-already-exists") {
       return {
         success: false,
@@ -30,6 +34,29 @@ export const signUp = async (params: SignUpParams) => {
     }
 
     return { success: false, message: "Failed to create an account" };
+  }
+};
+
+export const signIn = async (params: SignInParams) => {
+  const { email, idToken } = params;
+
+  try {
+    // Check exist by coming to Users collection / table, getting document where the specific id
+    const userRecord = await auth.getUserByEmail(email);
+    if (!userRecord) {
+      return {
+        success: false,
+        message: "User does not exists. Create an new account instead.",
+      };
+    }
+    // Log in
+    await setSessionCookie(idToken);
+  } catch (error) {
+    console.error("User was not created because of: ", error);
+    return {
+      success: false,
+      message: "Failed to log into an account.",
+    };
   }
 };
 
