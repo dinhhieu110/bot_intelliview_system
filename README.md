@@ -40,3 +40,6 @@ This project is built using the following technologies:
 3. Run `npm install`  
 4. Create a `.env.local` file and add your Firebase and API keys  
 5. npm run dev
+
+## 👨‍💻 Author
+Tran Dinh Hieu (Wilson Tran) – A passionate full-stack developer focused on building intelligent, modern web applications with AI integration.
