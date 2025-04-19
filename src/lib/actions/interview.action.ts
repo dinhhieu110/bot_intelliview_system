@@ -14,6 +14,13 @@ export const getInterviewsByUserId = async (
   })) as Interview[];
 };
 
+export const getInterviewDetailsById = async (
+  id: string
+): Promise<Interview | null> => {
+  const interviewRecord = await db.collection("interviews").doc(id).get();
+  return interviewRecord.data() as Interview | null;
+};
+
 export const getLatestInterviews = async (
   params: GetLatestInterviewsParams
 ): Promise<Interview[] | null> => {
